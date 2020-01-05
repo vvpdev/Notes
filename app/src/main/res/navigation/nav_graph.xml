@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listNotesFragment">
+
+    <fragment
+        android:id="@+id/listNotesFragment"
+        android:name="com.vvp.notes.fragments.NotesListFragment"
+        android:label="fragment_list_notes"
+        tools:layout="@layout/fragment_list_notes" >
+        <action
+            android:id="@+id/actionToShowNote"
+            app:destination="@id/detailsNoteFragment" />
+        <action
+            android:id="@+id/action_toCreateNote"
+            app:destination="@id/editNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsNoteFragment"
+        android:name="com.vvp.notes.fragments.DetailsNoteFragment"
+        android:label="fragment_details_note"
+        tools:layout="@layout/fragment_details_note" >
+        <action
+            android:id="@+id/action_toEditNote"
+            app:destination="@id/editNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editNoteFragment"
+        android:name="com.vvp.notes.fragments.EditNoteFragment"
+        android:label="fragment_edit_note"
+        tools:layout="@layout/fragment_edit_note" />
+</navigation>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Заметки</string>
+    <string name="enter_text_fot_search">введите текст для поиска</string>
+
+</resources>
