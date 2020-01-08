@@ -1,34 +1,52 @@
 package com.vvp.notes.presenters
 
+import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.vvp.notes.providers.NotesProvider
+import com.vvp.notes.utils.AppClass.Companion.dateBase
 import com.vvp.notes.views.NotesListView
-import com.vvp.repository.modelNote.Note
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-// список заметок
+    // список заметок
 
 @InjectViewState
-class NotesListPresenter: MvpPresenter<NotesListView>() {
+class NotesListPresenter constructor(context: Context) : MvpPresenter<NotesListView>() {
 
 
-    private var provider: NotesProvider = NotesProvider()
+        init {
 
-    // запуск при инжектировании
-    init {
+            // настройка RecyclerView
+            viewState.setupRecView()
 
-        if (this.provider.getNoteList().isEmpty()){
+            CoroutineScope(Dispatchers.Main).launch {
 
-            viewState.showError("у Вас еще нет заметок")
-        }
-        else{
-            viewState.showNotes(this.provider.getNoteList())
-        }
+            context.let {
+
+             val notesFromDB = dateBase.noteDAO().fetchAllNotesAsync()
+
+             if (notesFromDB.isEmpty()){
+                 viewState.showError("у Вас еще нет заметок")
+             }
+             else{
+                 viewState.showNotes(notesFromDB)
+             }
+            }
+           }
+         }
+
+
+    // передача презентеру позиции нажатого айтема
+    fun onClick(itemPosition: Int){
+        viewState.toDetailsNote(itemPosition)
     }
 
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
 
 }

@@ -2,5 +2,18 @@
     <string name="app_name">Заметки</string>
     <string name="enter_text_fot_search">введите текст для поиска</string>
     <string name="date_edit">дата редактирования</string>
+    <string name="enter_title">введите заголовок</string>
+    <string name="enter_body_note">введите текст заметки</string>
+    <string name="save_change">сохранить</string>
+    <string name="back_to_notes_list">назад к списку</string>
+    <string name="question_save_change">Сохранить изменения</string>
+    <string name="answer_yes">да</string>
+    <string name="answer_no">нет</string>
+    <string name="text_error">textError</string>
+    <string name="about_app">about</string>
+    <string name="save_note">сохранить</string>
+    <string name="cancel">отмена</string>
+    <string name="double_tap_for_exit">нажмите еще раз для выхода</string>
+    <string name="empty_notes_list">у Вас еще нет заметок</string>
 
 </resources>
