@@ -13,37 +13,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardTitleNote"
+        <TextView
+            android:id="@+id/textTitleNote"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="6dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <TextView
-                android:id="@+id/textTitleNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="textTitleNote"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <TextView
+            android:id="@+id/textBodyNote"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="6dp">
-
-            <TextView
-                android:id="@+id/textBodyNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:maxLines="3"
-                android:text="textBodyNote"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
-        </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:maxLines="3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <LinearLayout
             android:layout_width="match_parent"

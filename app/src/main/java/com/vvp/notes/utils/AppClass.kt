@@ -1,19 +1,23 @@
 package com.vvp.notes.utils
 
 import android.app.Application
-import com.vvp.repository.room.RoomDB
+import com.vvp.notes.di.DaggerDiComponent
+import com.vvp.notes.di.DateBaseModule
+import com.vvp.notes.di.DiComponent
 
 class AppClass: Application() {
 
 
     companion object {
-        lateinit var dateBase: RoomDB
+        var diComponent:DiComponent? = null
     }
-
 
     override fun onCreate() {
         super.onCreate()
-        dateBase = RoomDB.getInstance(context = applicationContext)
+
+
+        // создание модуля БД
+        diComponent = DaggerDiComponent.builder().dateBaseModule(DateBaseModule(context = applicationContext)).build()
     }
 
 }

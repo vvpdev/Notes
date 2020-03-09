@@ -4,23 +4,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vvp.notes.R
-import com.vvp.repository.model.Note
-
+import com.vvp.notes.repository.NoteModel
 
 
 class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
 
 
-    private var arrayListNotes: ArrayList<Note> = ArrayList()
+    private var currentList: ArrayList<NoteModel> = ArrayList()
 
-    fun setupAdapter(listNotes: List<Note>){
 
-        this.arrayListNotes.clear()
+    // добавить diffUtils????
 
-        this.arrayListNotes.addAll(elements = listNotes)
+
+    fun setupAdapter(newList: List<NoteModel>){
+
+        this.currentList.clear()
+
+        this.currentList.addAll(elements = newList)
 
         //обновляем изменения
         notifyDataSetChanged()
@@ -29,21 +31,18 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
 
-
         return ViewHolder(itemView = LayoutInflater.from(viewGroup.context).inflate(R.layout.cell_note, viewGroup, false))
     }
 
 
     override fun getItemCount(): Int {
-
-        return this.arrayListNotes.count()
+        return currentList.count()
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
-        holder.bindElements(note = this.arrayListNotes[position], action = clickListener)
+        holder.bindElements(note = this.currentList[position], action = clickListener)
     }
 
 
@@ -53,23 +52,22 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
         private var textTitleNote: TextView = itemView.findViewById(R.id.textTitleNote)
         private var textBodyNote: TextView = itemView.findViewById(R.id.textBodyNote)
         private var textEditDate: TextView = itemView.findViewById(R.id.textEditDate)
-        private var cardTitleNote: CardView = itemView.findViewById(R.id.cardTitleNote)
 
 
         // связка модели и UI
-        fun bindElements(note: Note, action: ItemClickListener){
+        fun bindElements(note: NoteModel, action: ItemClickListener){
 
-            if (note.title.isEmpty()){
-                this.cardTitleNote.visibility = View.GONE
+
+            if (note.title != null && note.title != ""){
+                textTitleNote.text = note.title
+            } else{
+                textTitleNote.visibility = View.GONE
             }
-            else{
-                this.textTitleNote.text = note.title
-            }
 
-            this.textBodyNote.text = note.bodyNote
-            //this.textEditDate.text = note.dateEdit
+            textBodyNote.text = note.text
+            textEditDate.text = note.date
 
-            itemView.setOnClickListener{ action.onItemClick(item = note, position = adapterPosition) }
+            itemView.setOnClickListener{ action.onItemClick(note = note) }
         }
     }
 
@@ -77,7 +75,7 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
         //listener interface
         interface ItemClickListener{
 
-         fun onItemClick(item: Note, position: Int)
+         fun onItemClick(note: NoteModel)
         }
 
 }
