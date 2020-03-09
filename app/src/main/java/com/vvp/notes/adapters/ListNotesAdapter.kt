@@ -15,16 +15,13 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
     private var currentList: ArrayList<NoteModel> = ArrayList()
 
 
-    // добавить diffUtils????
-
-
     fun setupAdapter(newList: List<NoteModel>){
 
         this.currentList.clear()
 
         this.currentList.addAll(elements = newList)
 
-        //обновляем изменения
+       
         notifyDataSetChanged()
     }
 
