@@ -6,7 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -42,9 +42,6 @@ class ListActivity :  MvpAppCompatActivity(), ListView, ListNotesAdapter.ItemCli
         // переход к созданию новой заметки
         floatButtonNewNote.setOnClickListener{ startActivity(Intent(this, EditActivity::class.java)) }
 
-
-
-        //активити фо резалт?????
     }
 
 
@@ -52,8 +49,6 @@ class ListActivity :  MvpAppCompatActivity(), ListView, ListNotesAdapter.ItemCli
         super.onPostResume()
         presenter.fetchAllNotes()
     }
-
-
 
 
 
@@ -84,7 +79,7 @@ class ListActivity :  MvpAppCompatActivity(), ListView, ListNotesAdapter.ItemCli
         textError.visibility = View.GONE
         editTextForSearch.visibility = View.VISIBLE
         recyclerListNotes.visibility = View.VISIBLE
-        adapter.setupAdapter(notesList)
+        adapter.loadData(notesList)
     }
 
 
@@ -104,12 +99,31 @@ class ListActivity :  MvpAppCompatActivity(), ListView, ListNotesAdapter.ItemCli
     }
 
 
-
+    // open selected item
     override fun onItemClick(note: NoteModel) {
 
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra("selectedNote", note)
         startActivity(intent)
+    }
+
+
+    // delete selected note
+    override fun onLongItemClick(id: Int) {
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.question_delete_selected_note)
+
+            .setPositiveButton(R.string.answer_yes) { _, _ ->
+
+                presenter.deleteSelectedNote(id = id)
+            }
+            .setNegativeButton(R.string.answer_no) { dialog, _ ->
+                dialog.cancel()
+            }
+            .setCancelable(true)
+            .create()
+            .show()
     }
 
 

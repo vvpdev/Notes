@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.vvp.notes.R
 import com.vvp.notes.repository.NoteModel
+import com.vvp.notes.utils.NoteDiffUtil
 
 
 class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerView.Adapter<ListNotesAdapter.ViewHolder>() {
@@ -15,6 +17,7 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
     private var currentList: ArrayList<NoteModel> = ArrayList()
 
 
+<<<<<<< HEAD
     fun setupAdapter(newList: List<NoteModel>){
 
         this.currentList.clear()
@@ -23,6 +26,19 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
 
        
         notifyDataSetChanged()
+=======
+    fun loadData(newList: List<NoteModel>){
+
+        if (newList != currentList){
+            val diffUtil = NoteDiffUtil(oldList = currentList, newList = newList)
+            val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(diffUtil)
+
+            currentList.clear()
+            currentList.addAll(elements = newList)
+
+            diffResult.dispatchUpdatesTo(this)
+        }
+>>>>>>> add long click listener for recyclerView
     }
 
 
@@ -40,6 +56,14 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.bindElements(note = this.currentList[position], action = clickListener)
+
+        //long click listener
+        holder.itemView.setOnLongClickListener {
+            clickListener.onLongItemClick(id = this.currentList[position].id)
+            false
+        }
+
+
     }
 
 
@@ -51,7 +75,7 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
         private var textEditDate: TextView = itemView.findViewById(R.id.textEditDate)
 
 
-        // связка модели и UI
+        // привязка модели и UI
         fun bindElements(note: NoteModel, action: ItemClickListener){
 
 
@@ -73,6 +97,7 @@ class ListNotesAdapter (private var clickListener: ItemClickListener): RecyclerV
         interface ItemClickListener{
 
          fun onItemClick(note: NoteModel)
+         fun onLongItemClick(id: Int)
         }
 
 }

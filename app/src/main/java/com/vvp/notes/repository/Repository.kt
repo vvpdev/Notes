@@ -52,12 +52,12 @@ class Repository {
     }
 
 
-    fun deleteNote(id: Int){
 
-
-
-
-
+    suspend fun deleteNote(id: Int): Boolean {
+        return CoroutineScope(Dispatchers.IO).async {
+            dao.deleteNote(id = id)
+            return@async true
+        }.await()
     }
 
 

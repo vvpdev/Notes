@@ -45,6 +45,23 @@ class ListPresenter: MvpPresenter<ListView>() {
 
 
 
+    fun deleteSelectedNote(id: Int){
+
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.deleteNote(id = id)
+
+            val noteList = repository.getAllNotes()
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                if (!noteList.isNullOrEmpty()){
+                    viewState.showNotes(notesList = noteList)
+                } else {
+                    viewState.showError(message = R.string.empty_notes_list)
+                }
+            }
+        }
+    }
 
 
 

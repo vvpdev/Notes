@@ -20,5 +20,7 @@
     <string name="note_updated">изменения сохранены</string>
     <string name="click_back_more">нажмите еще раз для выхода</string>
     <string name="error_empty_text">заметка обязательно должна иметь текст</string>
+    <string name="long_click">долгий клик</string>
+    <string name="question_delete_selected_note">Удалить заметку?</string>
 
 </resources>
